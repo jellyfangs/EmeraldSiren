@@ -3,7 +3,6 @@ require 'sinatra'
 require 'builder'
 require 'mechanize'
 require 'nokogiri'
-require 'yaml'
 
 username = "YOUR-USERNAME"
 password = "YOUR-PASSWORD"

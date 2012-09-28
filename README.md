@@ -5,7 +5,7 @@ The Emerald Siren is an extremely simple Ruby script that logs in and scrapes yo
 In simple: it's an easily broken read-only API for your Starbucks card.
 
 
-# Let's Be Clear
+# Let’s Be Clear
 
 * **This is not approved by Starbucks.**
 * This was made by a designer, not a programmer.
