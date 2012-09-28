@@ -2,7 +2,7 @@
 
 The Emerald Siren is an extremely simple Ruby script that logs in and scrapes your Starbucks’ account for how many stars you have. It also returns the balance and transaction history for your main card. It scrapes the page using Mechanize and grabs the data using regular expressions.
 
-In simple: it's a easily broken read-only API for your Starbucks card.
+In simple: it's an easily broken read-only API for your Starbucks card.
 
 
 # Let's Be Clear
