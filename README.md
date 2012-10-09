@@ -8,9 +8,13 @@ In simple: it's an easily broken read-only API for your Starbucks card.
 # Let’s Be Clear
 
 * **This is not approved by Starbucks.**
-* This was made by a designer, not a programmer.
 * If Starbucks makes a change to their site it could break.
-* I only have one Starbucks card so who knows what kind of crazy will be unleashed if I had more than one card.
+* I only have one Starbucks card so who knows what kind of crazy will be unleashed if you use it with more than one card.
+
+
+# How To Use This
+
+_See next commit in a few minutes._
 
 
 # Cool uses for this
