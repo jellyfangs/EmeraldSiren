@@ -14,7 +14,9 @@ In simple: it's an easily broken read-only API for your Starbucks card.
 
 # How To Use This
 
-_See next commit in a few minutes._
+Try it out at [emeraldsiren.com](http://emeraldsiren.com) or clone this repo. You can use Emerald Siren as an API to get a JSON output of your balance, stars, and recent transactions.
+
+The API call is simply `http://emeraldsiren.com/USERNAME/PASSWORD` Just remember to replace username and password with your log in details.
 
 
 # Cool uses for this
