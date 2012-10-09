@@ -186,7 +186,7 @@ get "/:username/:password" do |username,password|
     historycount += 1
   }
   # Grab the balance
-  balance = (page/'span.balance.numbers')
+  balance = (page/'span.balance.numbers').to_s.scan(/\S\d+\S\d+/)
   # Pull the number of stars you current have from their Flash applet
   page = a.get('https://www.starbucks.com/account/rewards')
   rawstars = (page/'script')
