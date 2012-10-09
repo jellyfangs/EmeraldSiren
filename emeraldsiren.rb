@@ -185,8 +185,9 @@ get "/:username/:password" do |username,password|
     history[historycount]["type"] = post.children.to_s.strip.scan(/>\s+[A-Za-z ]+/).to_s.gsub(/(>|\\r|\\n|\\t|\["|"\])/,"")
     historycount += 1
   }
-  # Grab the balance
+  # Grab the balance, break it out of an array
   balance = (page/'span.balance.numbers').to_s.scan(/\S\d+\S\d+/)
+  balance = balance[0]
   # Pull the number of stars you current have from their Flash applet
   page = a.get('https://www.starbucks.com/account/rewards')
   rawstars = (page/'script')
