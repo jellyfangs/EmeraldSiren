@@ -141,18 +141,18 @@ get "/" do
             <p><code>http://emeraldsiren.com/USERNAME/PASSWORD</code></p>
             <p><strong>Example Output</strong></p>
             <p><pre>{<br/>
-            &#9;"balance": $33.45,<br/>
-            &#9;"stars": "14",<br/>
+            &#9;"balance": 33.45,<br/>
+            &#9;"stars": 14,<br/>
             &#9;"transactions": [<br/>
             &#9;&#9;{<br/>
             &#9;&#9;&#9;"date": "10/1/2012",<br/>
             &#9;&#9;&#9;"type": "In Store Purchase",<br/>
-            &#9;&#9;&#9;"amount": "(3.65) USD"<br/>
+            &#9;&#9;&#9;"amount": -3.65<br/>
             &#9;&#9;},<br/>
             &#9;&#9;{<br/>
             &#9;&#9;&#9;"date": "10/2/2012",<br/>
             &#9;&#9;&#9;"type": "Automatic Reload",<br/>
-            &#9;&#9;&#9;"amount": "25.00 USD"<br/>
+            &#9;&#9;&#9;"amount": 25.00<br/>
             &#9;&#9;}<br/>
             &#9;]<br/>
             }</pre></p>
@@ -181,18 +181,18 @@ get "/:username/:password" do |username,password|
     # Remove HTML and put the transation history into a simple array of hashes
     history[historycount] = Hash.new
     history[historycount]["date"] = post.children.to_s.scan(/\d+\/\d+\/\d+/).to_s.gsub(/[\["\]\\]/,"")
-    history[historycount]["amount"] = post.children.to_s.scan(/\(?\d+\.\d+\)?\s\w+/).to_s.gsub(/[\["\]\\]/,"")
+    history[historycount]["amount"] = post.children.to_s.scan(/\(?\d+\.\d+/).to_s.gsub(/[\["\]\\]/,"").gsub(/\(/,"-").to_f
     history[historycount]["type"] = post.children.to_s.strip.scan(/>\s+[A-Za-z ]+/).to_s.gsub(/(>|\\r|\\n|\\t|\["|"\])/,"")
     historycount += 1
   }
   # Grab the balance, break it out of an array
-  balance = (page/'span.balance.numbers').to_s.scan(/\S\d+\S\d+/)
-  balance = balance[0]
+  balance = (page/'span.balance.numbers').to_s.scan(/\d+\S\d+/)
+  balance = balance[0].to_f
   # Pull the number of stars you current have from their Flash applet
   page = a.get('https://www.starbucks.com/account/rewards')
   rawstars = (page/'script')
   stars = rawstars[24].children.to_s.scan(/flashvars.numStars = "\d+"/)
-  stars = stars[0].gsub(/\D/,"")
+  stars = stars[0].gsub(/\D/,"").to_i
 
   json = JSONBuilder::Compiler.generate do
     balance balance
