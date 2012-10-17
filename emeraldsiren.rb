@@ -137,13 +137,15 @@ get "/" do
 
         <div class="post">
             <h2>The Unsanctioned Starbucks API</h2>
+            <p><strong>Github</strong></p>
+            <p><code><a href="https://github.com/jakebilbrey/emeraldsiren">https://github.com/jakebilbrey/emeraldsiren</a></code></p>
             <p><strong>API Call</strong></p>
             <p><code>http://emeraldsiren.com/USERNAME/PASSWORD</code></p>
             <p><strong>Example Output</strong></p>
             <p><pre>{<br/>
             &#9;"balance": 33.45,<br/>
             &#9;"rewards": 4,<br/>
-            &#9;"stars": 14,<br/>
+            &#9;"stars": 9,<br/>
             &#9;"transactions": [<br/>
             &#9;&#9;{<br/>
             &#9;&#9;&#9;"date": "10/1/2012",<br/>
@@ -157,8 +159,11 @@ get "/" do
             &#9;&#9;}<br/>
             &#9;]<br/>
             }</pre></p>
-            <p><strong>Github</strong></p>
-            <p><code><a href="https://github.com/jakebilbrey/emeraldsiren">https://github.com/jakebilbrey/emeraldsiren</a></code></p>
+            <p><strong>Single Result API Calls</strong></p>
+            <p><code>http://emeraldsiren.com/USERNAME/PASSWORD/stars</code></p>
+            <p><code>http://emeraldsiren.com/USERNAME/PASSWORD/rewards</code></p>
+            <p><code>http://emeraldsiren.com/USERNAME/PASSWORD/balance</code></p>
+            <p><code>http://emeraldsiren.com/USERNAME/PASSWORD/last</code></p>
       </div>
 </body>
 </html>'
@@ -207,4 +212,75 @@ get "/:username/:password" do |username,password|
         amount trans["amount"]
     end
   end
+end
+
+get "/:username/:password/stars" do |username,password|
+  a = Mechanize.new
+  page = a.get("https://www.starbucks.com/account/signin?ReturnUrl=/account/home")
+  form = page.form_with(:action => '/account/signin') do |login|
+    login['Account.UserName'] = username
+    login['Account.PassWord'] = password
+  end.submit
+  page = a.get('https://www.starbucks.com/account/home')
+  allstars = (page/'span.stars-until')
+  stars = allstars[0].to_s.strip.scan(/\d+/)
+  stars = stars[0].to_i
+  "#{stars}"
+end
+
+get "/:username/:password/rewards" do |username,password|
+  a = Mechanize.new
+  page = a.get("https://www.starbucks.com/account/signin?ReturnUrl=/account/home")
+  form = page.form_with(:action => '/account/signin') do |login|
+    login['Account.UserName'] = username
+    login['Account.PassWord'] = password
+  end.submit
+  page = a.get('https://www.starbucks.com/account/home')
+  rewards = (page/'span.rewards_cup_gold')
+  rewards = rewards[0].to_s.strip.scan(/\d+/)
+  rewards = rewards[0].to_i
+  "#{rewards}"
+end
+
+get "/:username/:password/balance" do |username,password|
+  a = Mechanize.new
+  page = a.get("https://www.starbucks.com/account/signin?ReturnUrl=/account/card/history")
+  form = page.form_with(:action => '/account/signin') do |login|
+    login['Account.UserName'] = username
+    login['Account.PassWord'] = password
+  end.submit
+  page = a.get('https://www.starbucks.com/account/card/history')
+  balance = (page/'span.balance.numbers').to_s.scan(/\d+\S\d+/)
+  balance = balance[0].to_f
+  "#{balance}"
+end
+
+get "/:username/:password/last" do |username,password|
+  a = Mechanize.new
+  page = a.get("https://www.starbucks.com/account/signin?ReturnUrl=/account/card/history")
+  form = page.form_with(:action => '/account/signin') do |login|
+    login['Account.UserName'] = username
+    login['Account.PassWord'] = password
+  end.submit
+  rawhistory = []
+  page = a.get('https://www.starbucks.com/account/card/history')
+  rawhistory += (page/'#history tbody tr')
+  page = a.get('https://www.starbucks.com/account/card/history/2')
+  rawhistory += (page/'#history tbody tr')
+  history = []
+  historycount = 0
+  rawhistory.each { |post|
+    history[historycount] = Hash.new
+    history[historycount]["date"] = post.children.to_s.scan(/\d+\/\d+\/\d+/).to_s.gsub(/[\["\]\\]/,"")
+    history[historycount]["amount"] = post.children.to_s.scan(/\(?\d+\.\d+/).to_s.gsub(/[\["\]\\]/,"").gsub(/\(/,"-").to_f
+    history[historycount]["type"] = post.children.to_s.strip.scan(/>\s+[A-Za-z ]+/).to_s.gsub(/(>|\\r|\\n|\\t|\["|"\])/,"")
+    historycount += 1
+  }
+  last = ""
+  history.each { |post|
+    if post["type"] == "In Store Purchase"
+        last = post["date"]
+    end
+  }
+  "#{last}"
 end
