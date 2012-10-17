@@ -18,7 +18,7 @@ Try it out at [emeraldsiren.com](http://emeraldsiren.com) or clone this repo. Yo
 
 The API call is simply `http://emeraldsiren.com/USERNAME/PASSWORD` Just remember to replace username and password with your log in details.
 
-Adding /stars /rewards /balance and /last to the end of the API call simply returns a number, amount, or date.
+Adding /stars /rewards /balance /last and /glance to the end of the API call simply returns a number, amount, date or a string.
 
 
 # Cool uses for this

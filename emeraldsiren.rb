@@ -164,6 +164,7 @@ get "/" do
             <p><code>http://emeraldsiren.com/USERNAME/PASSWORD/rewards</code></p>
             <p><code>http://emeraldsiren.com/USERNAME/PASSWORD/balance</code></p>
             <p><code>http://emeraldsiren.com/USERNAME/PASSWORD/last</code></p>
+            <p><code>http://emeraldsiren.com/USERNAME/PASSWORD/glance</code></p>
       </div>
 </body>
 </html>'
