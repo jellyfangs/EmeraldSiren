@@ -284,3 +284,23 @@ get "/:username/:password/last" do |username,password|
   }
   "#{last}"
 end
+
+get "/:username/:password/glance" do |username,password|
+  a = Mechanize.new
+  page = a.get("https://www.starbucks.com/account/signin?ReturnUrl=/account/card/history")
+  form = page.form_with(:action => '/account/signin') do |login|
+    login['Account.UserName'] = username
+    login['Account.PassWord'] = password
+  end.submit
+  page = a.get('https://www.starbucks.com/account/card/history')
+  balance = (page/'span.balance.numbers').to_s.scan(/\d+\S\d+/)
+  balance = balance[0].to_f
+  page = a.get('https://www.starbucks.com/account/home')
+  allstars = (page/'span.stars-until')
+  rewards = (page/'span.rewards_cup_gold')
+  rewards = rewards[0].to_s.strip.scan(/\d+/)
+  rewards = rewards[0].to_i
+  stars = allstars[0].to_s.strip.scan(/\d+/)
+  stars = stars[0].to_i
+  "$#{balance}  Rewards: #{rewards}  Stars: #{stars}"
+end
