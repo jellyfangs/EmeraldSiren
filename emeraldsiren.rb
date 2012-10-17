@@ -192,7 +192,10 @@ get "/:username/:password" do |username,password|
   page = a.get('https://www.starbucks.com/account/home')
   allstars = (page/'span.stars-until')
   rewards = (page/'span.rewards_cup_gold')
-  stars = allstars[0]
+  rewards = rewards[0].to_s.strip.scan(/\d+/)
+  rewards = rewards[0].to_i
+  stars = allstars[0].to_s.strip.scan(/\d+/)
+  stars = stars[0].to_i
 
   json = JSONBuilder::Compiler.generate do
     balance balance
