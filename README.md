@@ -21,13 +21,18 @@ The API call is simply `http://emeraldsiren.com/USERNAME/PASSWORD` Just remember
 Adding /stars /rewards /balance /last and /glance to the end of the API call simply returns a number, amount, date or a string.
 
 
-# Cool uses for this
+# Things That Use This
+
+* **[Check Your Starbucks Card with Alfred](http://blog.jakebilbrey.com/post/33815614673)** by _[me](http://jakebilbrey.com)_
+
+
+# Hypothetical Uses
 
 * Make your own iPhone Passbook card with updating balance (and maybe how many stars you have?)
 * Track how often you go to Starbucks
 * Save transaction history to a database so you have a complete history of how many iced grande soy chais you have had over the year (Let's not tell your psychologist.)
 
 
-# About the “developer”
+# About the “Developer”
 
 Any questions and requests can be send to my email <siren@jakebilbrey.com>. Feel free to take this and modify it to do whatever you want. Any improvements I would love to see added to this project.
