@@ -202,7 +202,7 @@ get "/:username/:password" do |username,password|
   rewards = rewards[0].to_i
   stars = allstars[0].to_s.strip.scan(/\d+/)
   stars = stars[0].to_i
-  stars = stars-12
+  stars = 12-stars
 
   json = JSONBuilder::Compiler.generate do
     balance balance
@@ -227,7 +227,7 @@ get "/:username/:password/stars" do |username,password|
   allstars = (page/'span.stars-until')
   stars = allstars[0].to_s.strip.scan(/\d+/)
   stars = stars[0].to_i
-  stars = stars-12
+  stars = 12-stars
   "#{stars}"
 end
 
@@ -305,6 +305,6 @@ get "/:username/:password/glance" do |username,password|
   rewards = rewards[0].to_i
   stars = allstars[0].to_s.strip.scan(/\d+/)
   stars = stars[0].to_i
-  stars = stars-12
+  stars = 12-stars
   "$#{balance}  Rewards: #{rewards}  Stars: #{stars}"
 end
