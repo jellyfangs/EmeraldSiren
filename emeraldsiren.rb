@@ -140,6 +140,7 @@ get "/" do
             <p><strong>Github</strong></p>
             <p><code><a href="https://github.com/jakebilbrey/emeraldsiren">https://github.com/jakebilbrey/emeraldsiren</a></code></p>
             <p><strong>API Call</strong></p>
+            <p><strong>Warning:</strong> your password will be transferred in plain text. You are safer to get the code from Github and run it locally on your machine.</p>
             <p><code>http://emeraldsiren.com/USERNAME/PASSWORD</code></p>
             <p><strong>Example Output</strong></p>
             <p><pre>{<br/>

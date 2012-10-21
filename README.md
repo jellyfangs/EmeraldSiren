@@ -10,6 +10,8 @@ In simple: it's an easily broken read-only API for your Starbucks card.
 * **This is not approved by Starbucks.**
 * If Starbucks makes a change to their site it could break.
 * I only have one Starbucks card so who knows what kind of crazy will be unleashed if you use it with more than one card.
+* Using the hosted API at emeraldsiren.com will transfer your password in plain text to the Heroku server where your log in information will NOT be stored. It's probably safer not to use it.
+
 
 
 # How To Use This
